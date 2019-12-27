@@ -88,7 +88,7 @@ $user = $userManager->getList();
                 <td><?php echo $value->getGroups() ?></td>
                 <td><?php echo '#' ?></td>
                 <td>
-                    <a href="Process/edit.php?index=<?php echo $key ?>">
+                    <a href="Process/edit.php?index=<?php echo $value->getId() ?>">
                         <button type="button" class="btn btn-outline-info">Edit</button>
                     </a>
                 </td>

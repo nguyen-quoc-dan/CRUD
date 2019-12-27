@@ -4,10 +4,12 @@
 class UserDB
 {
     protected $conn;
+
     public function __construct($connect)
     {
         $this->conn = $connect;
     }
+
     public function getList()
     {
         $sql = "SELECT * FROM users";
@@ -42,8 +44,25 @@ class UserDB
 
         $sql = "DELETE FROM users WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
-    
-}
+
+    }
+
+    public function edit($id, $name, $age, $address, $groups)
+    {
+        $sql = "UPDATE users SET name ='$name', age = $age, address = '$address', groups = '$groups' WHERE id=$id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        header("location: ../index.php");
+    }
+
+    public function getValueID($id)
+    {
+        $sql = "SELECT * FROM users WHERE id=$id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return new User($result[0]['name'], $result[0]['age'], $result[0]['address'], $result[0]['groups']);
+    }
 }
